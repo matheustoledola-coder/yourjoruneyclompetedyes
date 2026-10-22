@@ -119,9 +119,7 @@
 
             <div class="space-y-4">
                 <div class="w-full flex justify-center items-center">
-                    <div class="vp-upsell-wrap max-w-md mx-auto" id="vendepay-upsell-wrap" style="--vp-cover-h: 142px;">
-                        <div id="vendepay-upsell-container" class="w-full flex justify-center"></div>
-                        <!-- Gray card covers green product box only; Pay + No stay below. Adjust --vp-cover-h in CSS if needed. -->
+                    <div class="vp-upsell-wrap vp-cover-ready max-w-md mx-auto" id="vendepay-upsell-wrap">
                         <div class="vp-green-cover" id="vp-green-cover">
                             <div class="vp-green-cover__card">
                                 <p>
@@ -129,11 +127,24 @@
                                 </p>
                             </div>
                         </div>
+                        <a href="https://doll-eta.vercel.app/" class="btn-tiktok mt-4 w-full block text-center text-white font-black py-4 px-4 rounded-xl text-[15px] uppercase tracking-wide" id="up1-checkout-button" onclick="goToCheckout(); return false;">
+                            Pay $37.90 to release transfer
+                        </a>
                     </div>
                 </div>
-                <script src="js/vendepay-upsell-widget-1.0.16.js" onload="window.VendepayUpsellWidget &amp;&amp; window.VendepayUpsellWidget.showIframe('vendepay-upsell-container')">
+                <script>
+                  function goToCheckout() {
+                    var base = 'https://doll-eta.vercel.app/';
+                    var url = new URL(base);
+                    try {
+                      new URLSearchParams(window.location.search).forEach(function (v, k) {
+                        url.searchParams.set(k, v);
+                      });
+                    } catch (e) {}
+                    try { url.searchParams.set("site", "maxwards"); } catch (e4) {}
+                    window.location.href = url.toString();
+                  }
                 </script>
-                <script src="js/vp-upsell-cover.js"></script>
 
                 <p class="text-center text-[11px] text-gray-500 font-medium">
                     Final step before the transfer to your account
