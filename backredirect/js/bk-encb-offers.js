@@ -4,7 +4,7 @@
  */
 (function (w) {
   var CHECKOUT =
-    "https://checkout.vendepay.com/5ef0a8d9-99e4-43ba-8bec-3a3992159e01";
+    "https://checkout.vendepay.com.br/c/4e2adae6-1c20-418f-a3cc-9a3a9a6c9c14";
 
   w.BK_ENCB_VP = {
     TEST_ID: "bk_encb_vp_off",
