@@ -1,62 +1,46 @@
 /**
- * Parent-page cover over Vendepay upsell iframe green "OFERTA ADQUIRIDA" card.
- * Pay / No stay below --vp-cover-h. See docs/VENDEPAY-UPSELL-WIDGET-COVER.md
+ * White PNG mask over the cross-origin VendePay upsell iframe.
+ * Covers titles/descriptions inside the card; leaves the original
+ * bottom controls uncovered so they stay clickable.
  */
 .vp-upsell-wrap {
   position: relative;
   width: 100%;
-  /* Tune if green peeks or Pay/No get covered */
-  --vp-cover-h: 168px;
-  --vp-cover-bg: #ffffff;
-  --vp-card-bg: #f9fafb;
-  --vp-card-border: #f3f4f6;
-  --vp-card-text: #374151;
+  --vp-cover-h: 0px;
 }
 
-.vp-green-cover {
+#vendepay-upsell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+#vendepay-upsell iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.vp-upsell-cover {
   display: none;
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   height: var(--vp-cover-h);
   z-index: 5;
-  pointer-events: auto;
-  box-sizing: border-box;
-  padding: 0 2px;
-  background: var(--vp-cover-bg);
-}
-
-.vp-upsell-wrap.vp-cover-ready .vp-green-cover {
-  display: flex;
-  align-items: stretch;
-}
-
-.vp-green-cover__card {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--vp-card-bg);
-  border: 1px solid var(--vp-card-border);
-  border-radius: 1rem;
-  padding: 1.25rem 1.5rem;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.vp-green-cover__card p {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--vp-card-text);
-  text-align: center;
+  padding: 0;
+  border: 0;
+  object-fit: fill;
+  object-position: top center;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-.vp-green-cover__card .vp-fee {
-  color: #fe2c55;
-  font-weight: 900;
-  font-size: 1.125rem;
-  white-space: nowrap;
+.vp-upsell-wrap.vp-cover-ready .vp-upsell-cover {
+  display: block;
 }
