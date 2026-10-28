@@ -1,0 +1,659 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Payout on hold</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(254, 44, 85, 0.08), transparent 28%),
+        radial-gradient(circle at 82% 78%, rgba(37, 244, 238, 0.07), transparent 32%),
+        #f4f5f7;
+      color: #161823;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 10px 12px 10px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+    }
+
+    .brand-name {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      color: #161823;
+      line-height: 1;
+    }
+
+    .countdown {
+      width: 100%;
+      min-height: 82px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #ff4d7d, #fe2c55, #e9155c);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 12px 20px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 24px rgba(254, 44, 85, 0.22);
+    }
+
+    .countdown-label {
+      font-size: clamp(18px, 3.5vw, 28px);
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .warning {
+      font-size: 25px;
+    }
+
+    .time {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: clamp(24px, 5vw, 38px);
+    }
+
+    .time-box {
+      background: #fff;
+      color: #161823;
+      border-radius: 12px;
+      padding: 10px 13px;
+      min-width: 70px;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .status {
+      text-align: center;
+      font-size: clamp(17px, 3vw, 24px);
+      letter-spacing: 5px;
+      margin-bottom: 24px;
+      font-weight: 700;
+      color: #5c5c66;
+    }
+
+    .status::before,
+    .status::after {
+      content: "";
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      margin: 0 14px;
+      vertical-align: middle;
+    }
+
+    .status::before { background: #fe2c55; }
+    .status::after { background: #25f4ee; }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(48px, 10vw, 82px);
+      line-height: 0.98;
+      letter-spacing: -3px;
+      margin-bottom: 40px;
+    }
+
+    h1 span {
+      color: #4b4c55;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: clamp(21px, 4vw, 31px);
+      line-height: 1.45;
+      margin-bottom: 28px;
+      color: #3a3b42;
+    }
+
+    .amount {
+      background: #fe2c55;
+      color: #fff;
+      border-radius: 10px;
+      padding: 2px 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .notice {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      background: #fff;
+      border: 1px solid #e6e7eb;
+      border-radius: 25px;
+      padding: 30px;
+      margin-bottom: 32px;
+      box-shadow: 0 10px 30px rgba(22, 24, 35, 0.06);
+    }
+
+    .notice-icon {
+      width: 72px;
+      height: 72px;
+      flex: 0 0 72px;
+      border-radius: 18px;
+      border: 1px solid #ffd0db;
+      background: linear-gradient(180deg, #fff7f9, #ffe4ea);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notice-icon svg {
+      width: 34px;
+      height: 34px;
+    }
+
+    .reserved {
+      display: flex;
+      justify-content: center;
+      margin: -8px 0 28px;
+    }
+
+    .reserved span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #e6e7eb;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #3a3b42;
+      box-shadow: 0 4px 14px rgba(22, 24, 35, 0.04);
+    }
+
+    .reserved i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.16);
+    }
+
+    .notice-title {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .notice-text {
+      font-size: clamp(18px, 3.2vw, 24px);
+      line-height: 1.45;
+      color: #5c5c66;
+    }
+
+    .notice-text strong {
+      color: #161823;
+    }
+
+    .offer {
+      border: 2px solid #f0d0d8;
+      border-radius: 25px;
+      padding: 28px 22px 32px;
+      text-align: center;
+      margin-bottom: 22px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(254, 44, 85, 0.08), transparent 55%),
+        #fff;
+      box-shadow: 0 10px 30px rgba(22, 24, 35, 0.05);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #ffd0db;
+      background: #fff1f4;
+      color: #c2184a;
+      border-radius: 30px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      margin-bottom: 18px;
+    }
+
+    .badge-icon {
+      color: #fe2c55;
+      font-size: 15px;
+    }
+
+    .from {
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: #6b6c75;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #9a9aa3;
+    }
+
+    .price-now {
+      font-size: clamp(52px, 12vw, 68px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: #161823;
+      margin: 4px 0 12px;
+    }
+
+    .save {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 0;
+      background: #161823;
+      border-radius: 35px;
+      padding: 8px 14px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+
+    .offer-note {
+      margin-top: 16px;
+      font-size: 15px;
+      line-height: 1.4;
+      color: #5c5c66;
+    }
+
+    .trust {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 28px;
+    }
+
+    .trust-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #5c5c66;
+    }
+
+    .trust-line svg {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+    }
+
+    .pay-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .pay-row span {
+      min-width: 52px;
+      padding: 6px 9px;
+      border: 1px solid #e6e7eb;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      color: #3a3b42;
+    }
+
+    .fine {
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.45;
+      color: #8a8b93;
+      padding: 0 8px 18px;
+    }
+
+    .cta {
+      width: 100%;
+      min-height: 72px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(180deg, #ff2a72, #e9155c);
+      color: #fff;
+      font-size: clamp(22px, 4.5vw, 30px);
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(236, 23, 98, 0.25);
+      transition: transform .15s ease, filter .15s ease;
+      animation: ctaPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes ctaPulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 8px 30px rgba(236, 23, 98, 0.25);
+      }
+      50% {
+        transform: scale(1.04);
+        box-shadow: 0 8px 45px rgba(236, 23, 98, 0.45);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 8px 30px rgba(236, 23, 98, 0.25);
+      }
+    }
+
+    .cta:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px) scale(1.04);
+    }
+
+    .cta:active {
+      transform: translateY(0) scale(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 16px 12px 30px;
+      }
+
+      .countdown {
+        min-height: 65px;
+        gap: 8px;
+        padding: 8px 10px;
+        margin-bottom: 75px;
+      }
+
+      .countdown-label {
+        font-size: 15px;
+        letter-spacing: .5px;
+      }
+
+      .warning {
+        font-size: 18px;
+      }
+
+      .time {
+        font-size: 22px;
+        gap: 4px;
+      }
+
+      .time-box {
+        min-width: 48px;
+        padding: 9px 6px;
+        border-radius: 8px;
+      }
+
+      .status {
+        letter-spacing: 3px;
+        margin-bottom: 32px;
+      }
+
+      .status::before,
+      .status::after {
+        width: 9px;
+        height: 9px;
+        margin: 0 7px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+        margin-bottom: 30px;
+      }
+
+      .subtitle {
+        margin-bottom: 45px;
+      }
+
+      .notice {
+        padding: 22px 18px;
+        gap: 16px;
+        border-radius: 20px;
+      }
+
+      .notice-icon {
+        width: 56px;
+        height: 56px;
+        flex-basis: 56px;
+        border-radius: 14px;
+      }
+
+      .notice-icon svg {
+        width: 26px;
+        height: 26px;
+      }
+
+      .price-now {
+        font-size: 54px;
+      }
+
+      .notice-title {
+        margin-bottom: 8px;
+      }
+
+      .offer {
+        padding: 24px 16px 26px;
+        border-radius: 20px;
+      }
+
+      .badge {
+        padding: 8px 14px;
+        letter-spacing: 1.5px;
+      }
+
+      .from {
+        margin-bottom: 30px;
+      }
+
+      .cta {
+        min-height: 82px;
+        border-radius: 20px;
+      }
+    }
+  </style>
+<script type="text/javascript" async="" src="js/events.js"></script><script>
+!function (w, d, t) {
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+  ttq.load('DAHN72JC77UC8FLK0UMG');
+  var BK_AB = 'light';
+  var BK_CID = 'bk-encb-light';
+  w.BK_AB = BK_AB;
+  w.BK_CID = BK_CID;
+  ttq.page();
+  try { ttq.track('ViewContent', { content_id: BK_CID, content_name: BK_CID }); } catch (_) {}
+  document.addEventListener('click', function (e) {
+    try {
+      var el = e.target.closest && e.target.closest('a[href*="vendepay.com"], a[href*="checkout"]');
+      if (el) {
+        var cid = BK_CID + '-' + ((window.BK_ENCB_VP && window.BK_ENCB_VP.arm) || 'a');
+        ttq.track('InitiateCheckout', { content_id: cid, content_name: cid });
+      }
+    } catch (_) {}
+  });
+}(window, document, 'ttq');
+</script>
+<script src="js/attr-store.js"></script>
+<script src="js/bk-encb-offers.js"></script>
+<script>
+(function () {
+  var KEY = 'ht_utms';
+  var url = new URLSearchParams(window.location.search);
+  var incoming = {}; url.forEach(function (v, k) { incoming[k] = v; });
+  incoming.bk_ab = incoming.bk_ab || window.BK_AB || 'light';
+  incoming.bk_test = incoming.bk_test || 'bk_encb_theme_v1';
+  incoming.vp_offer = incoming.vp_offer || (window.BK_ENCB_VP && window.BK_ENCB_VP.arm) || '';
+  incoming.vp_test = incoming.vp_test || (window.BK_ENCB_VP && window.BK_ENCB_VP.TEST_ID) || 'bk_encb_vp_off';
+  var saved = {}; try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  var all = Object.assign({}, saved, incoming);
+  try { localStorage.setItem(KEY, JSON.stringify(all)); } catch (e) {}
+  try {
+    var cur = new URL(window.location.href), changed = false;
+    Object.keys(all).forEach(function (k) { if (!cur.searchParams.has(k)) { cur.searchParams.set(k, all[k]); changed = true; } });
+    if (changed) history.replaceState(null, '', cur.toString());
+  } catch (e) {}
+  function decorate() {
+    var qs = new URLSearchParams(all).toString();
+    if (!qs) return;
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      try {
+        var u = new URL(a.href, window.location.origin);
+        if (u.protocol.indexOf('http') !== 0) return;
+        Object.keys(all).forEach(function (k) { if (!u.searchParams.has(k)) u.searchParams.set(k, all[k]); });
+        a.href = u.toString();
+      } catch (e) {}
+    });
+  }
+  if (document.readyState !== 'loading') decorate(); else document.addEventListener('DOMContentLoaded', decorate);
+  window.htUtms = all;
+})();
+</script>
+  <script src="js/up-track.js"></script>
+</head>
+
+<body>
+  <main class="page">
+
+    <div class="brand" role="img" aria-label="TikTok">
+      <img src="images/tiktok-note.svg" alt="">
+      <span class="brand-name">TikTok</span>
+    </div>
+
+    <div class="countdown">
+      <span class="warning">⚠</span>
+      <span class="countdown-label">OFFER EXPIRES IN</span>
+      <div class="time">
+        <span class="time-box" id="minutes">04</span>
+        <span>:</span>
+        <span class="time-box" id="seconds">50</span>
+      </div>
+    </div>
+
+    <div class="status">PAYOUT ON HOLD</div>
+
+    <h1>
+      Hey,<br>
+      <span>wait a second!</span>
+    </h1>
+
+    <p class="subtitle">
+      Your <span class="amount">$1,289</span> reward is still<br>
+      reserved for a few more minutes
+    </p>
+
+    <div class="reserved"><span><i></i> Reserved on your account</span></div>
+
+    <section class="notice">
+      <div class="notice-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="#fe2c55" stroke-width="2.2" stroke-linecap="round"></path>
+          <rect x="4.5" y="11" width="15" height="10" rx="3" stroke="#161823" stroke-width="2"></rect>
+          <circle cx="12" cy="16" r="1.4" fill="#161823"></circle>
+        </svg>
+      </div>
+      <div>
+        <div class="notice-title">You're about to receive $1,289</div>
+        <div class="notice-text">
+          Security verification is the <strong>last step</strong> to release your payout.
+        </div>
+      </div>
+    </section>
+
+    <section class="offer">
+      <div class="badge">
+        <span class="badge-icon">★</span>
+        EXCLUSIVE DISCOUNT
+      </div>
+
+      <div class="from">
+        From <span class="old-price">$37.00</span> for
+      </div>
+      <div class="price-now">$9.90</div>
+      <div class="save">73% off · today only</div>
+      <p class="offer-note">One-time verification fee. Your $1,289 stays reserved.</p>
+    </section>
+
+    <a href="https://checkout.vendepay.com/5ef0a8d9-99e4-43ba-8bec-3a3992159e01?vsl_ab=0&amp;vsl_test=verified_vsl_v1&amp;utm_source=OG-1793213525303-7wgpwtbjkl5a8&amp;sck=OG-1793213525303-7wgpwtbjkl5a8&amp;bk_ab=light&amp;bk_test=bk_encb_theme_v1&amp;vp_offer=default&amp;vp_test=bk_encb_vp_off" id="redirectButton" style="text-decoration:none;">
+      <button class="cta" type="button">ACTIVATE DISCOUNT NOW</button>
+    </a>
+
+    <div class="trust">
+      <div class="trust-line">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" stroke="#161823" stroke-width="1.8"></path>
+          <path d="M8.8 12.2l2.1 2.1 4.4-4.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        Secure checkout · encrypted payment
+      </div>
+      <div class="pay-row">
+        <span>VISA</span>
+        <span>Mastercard</span>
+        <span>Amex</span>
+        <span>Apple Pay</span>
+        <span>G Pay</span>
+      </div>
+    </div>
+    <p class="fine">This unlocks the transfer. Your payout is not deducted from this fee.</p>
+
+  </main>
+
+  <script>
+    let totalSeconds = 4 * 60 + 50;
+
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    function updateTimer() {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+
+      minutesEl.textContent = String(minutes).padStart(2, "0");
+      secondsEl.textContent = String(seconds).padStart(2, "0");
+
+      if (totalSeconds > 0) {
+        totalSeconds--;
+      } else {
+        clearInterval(timer);
+      }
+    }
+
+    updateTimer();
+    const timer = setInterval(updateTimer, 1000);
+  </script>
+
+
+</body></html>
