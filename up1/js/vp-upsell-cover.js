@@ -23,9 +23,10 @@
       return width || window.innerWidth;
     }
 
-    /* Bottom band left clear for CTA + decline link + card padding. */
+    /* Bottom band left clear for CTA + decline link + card padding.
+       Kept taller so the white mask ends above the primary button. */
     function buttonBand() {
-      return frameWidth() <= 420 ? 120 : 112;
+      return frameWidth() <= 420 ? 158 : 148;
     }
 
     function watchIframe() {
