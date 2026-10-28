@@ -1,38 +1,67 @@
 /**
- * Parent-page cover over Vendepay upsell iframe green "OFERTA ADQUIRIDA" card.
- * Pay / No stay below --vp-cover-h. See docs/VENDEPAY-UPSELL-WIDGET-COVER.md
+ * Opaque parent-page mask over the cross-origin VendePay upsell iframe.
+ * The iframe document cannot be styled from this page. The mask leaves a
+ * bottom band clear so the original controls stay visible and receive clicks.
  */
 .vp-upsell-wrap {
   position: relative;
   width: 100%;
-  /* Tune if green peeks or Pay/No get covered */
-  --vp-cover-h: 168px;
+  background: #ffffff;
+  --vp-actions-h: 120px;
+  --vp-bottom-h: 0px;
   --vp-cover-bg: #ffffff;
   --vp-card-bg: #f9fafb;
   --vp-card-border: #f3f4f6;
   --vp-card-text: #374151;
 }
 
-.vp-green-cover {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--vp-cover-h);
-  z-index: 5;
-  pointer-events: auto;
-  box-sizing: border-box;
-  padding: 0 2px;
-  background: var(--vp-cover-bg);
+#vendepay-upsell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }
 
-.vp-upsell-wrap.vp-cover-ready .vp-green-cover {
-  display: flex;
+#vendepay-upsell iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.vp-upsell-cover,
+.vp-upsell-cover-bottom {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  background: var(--vp-cover-bg);
+  pointer-events: auto;
+}
+
+.vp-upsell-cover {
+  top: 0;
+  bottom: calc(var(--vp-actions-h) + var(--vp-bottom-h));
+  padding: 0 2px;
   align-items: stretch;
 }
 
-.vp-green-cover__card {
+.vp-upsell-cover-bottom {
+  bottom: 0;
+  height: var(--vp-bottom-h);
+}
+
+.vp-upsell-wrap.vp-cover-ready .vp-upsell-cover {
+  display: flex;
+}
+
+.vp-upsell-wrap.vp-cover-ready .vp-upsell-cover-bottom {
+  display: block;
+}
+
+.vp-upsell-cover__card {
   width: 100%;
   height: 100%;
   display: flex;
@@ -46,7 +75,7 @@
   overflow: hidden;
 }
 
-.vp-green-cover__card p {
+.vp-upsell-cover__card p {
   margin: 0;
   font-size: 14px;
   line-height: 1.5;
@@ -54,9 +83,19 @@
   text-align: center;
 }
 
-.vp-green-cover__card .vp-fee {
+.vp-upsell-cover__card .vp-fee {
   color: #fe2c55;
   font-weight: 900;
   font-size: 1.125rem;
   white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+  .vp-upsell-cover__card {
+    padding: 1rem 1.1rem;
+  }
+
+  .vp-upsell-cover__card p {
+    font-size: 13px;
+  }
 }
