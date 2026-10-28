@@ -42,24 +42,41 @@
   </style>
 
   <script>
-    // Back-button trap — sends the visitor to the back upsell.
+    // If visitor already reached checkout and comes back here, send to backredirect.
     (function () {
-      var link = "https://verified-exit-en.vercel.app/bk-encb-light";
-      function setBackRedirect(url) {
-        history.pushState({}, "", location.href);
-        history.pushState({}, "", location.href);
-        history.pushState({}, "", location.href);
-        window.addEventListener("popstate", function () {
-          setTimeout(function () {
-            var dest = String(url || "").trim();
-            var q = (location.search || "").replace(/^\?/, "");
-            if (q && dest.indexOf("?") < 0) dest += "?" + q;
-            else if (q) dest += "&" + q;
-            location.href = dest;
-          }, 1);
-        });
+      var KEY = "vp_reached_checkout";
+      var BACK =
+        "https://completetheprocess.vercel.app/backredirect?vsl_ab=0&vsl_test=verified_vsl_v1&utm_source=OG-1793213525303-7wgpwtbjkl5a8&sck=OG-1793213525303-7wgpwtbjkl5a8";
+
+      function hasReachedCheckout() {
+        try {
+          return sessionStorage.getItem(KEY) === "1";
+        } catch (e) {
+          return false;
+        }
       }
-      setBackRedirect(link);
+
+      function redirectToBack() {
+        try {
+          sessionStorage.removeItem(KEY);
+        } catch (e) {}
+        location.replace(BACK);
+      }
+
+      function maybeRedirectFromCheckout() {
+        if (hasReachedCheckout()) redirectToBack();
+      }
+
+      window.__markCheckoutReached = function () {
+        try {
+          sessionStorage.setItem(KEY, "1");
+        } catch (e) {}
+      };
+
+      maybeRedirectFromCheckout();
+      window.addEventListener("pageshow", function () {
+        maybeRedirectFromCheckout();
+      });
     })();
   </script>
   <meta charset="utf-8">
@@ -800,6 +817,9 @@
           <script>
             function goToCheckout() {
               // Pay fee = front product 5b347ed1
+              try {
+                if (window.__markCheckoutReached) window.__markCheckoutReached();
+              } catch (e0) {}
               var base = 'https://checkout.vendepay.com.br/c/9089e400-c236-4132-858b-6e14d3c74e3e';
               var url = new URL(base);
               // Forward every query param as received (no skip / clean)
