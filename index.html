@@ -15,38 +15,13 @@
 <script src="js/utm-handler.js" data-token="ce92138f-a9ec-450a-a0ee-6ec9c5af4834">
 	</script>
 
-  <!-- Standalone exit-encb — no global exitMode redirect -->
-  <script src="js/vsl-ab.js"></script>
-  <script>
-    // Prevent VSL-arm FOUC: hide gated confirmation until UI script runs
-    (function () {
-      try {
-        if (window.VSL_AB && VSL_AB.isVsl()) {
-          document.documentElement.classList.add("vsl-ab-arm-vsl");
-        } else {
-          document.documentElement.classList.add("vsl-ab-arm-control");
-        }
-      } catch (e) {
-        document.documentElement.classList.add("vsl-ab-arm-control");
-      }
-    })();
-  </script>
-  <!-- Critical: must be inline — external vsl-ab.css can load after first paint -->
-  <style id="vsl-ab-fouc">
-    html.vsl-ab-arm-vsl:not(.vsl-ab-unlocked) #vsl-ab-gated { display: none !important; }
-    html.vsl-ab-arm-vsl #vsl-ab-player-wrap[hidden],
-    html.vsl-ab-arm-vsl #vsl-ab-player-wrap { display: block !important; }
-    html.vsl-ab-arm-vsl:not(.vsl-ab-unlocked) #popup-um { display: none !important; }
-    html.vsl-ab-arm-control #vsl-ab-player-wrap,
-    html.vsl-ab-arm-control #vsl-ab-player-wrap[hidden] { display: none !important; }
-  </style>
-
+  
   <script>
     // If visitor already reached checkout and comes back here, send to backredirect.
     (function () {
       var KEY = "vp_reached_checkout";
       var BACK =
-        "https://completetheprocess.vercel.app/backredirect?vsl_ab=0&vsl_test=verified_vsl_v1&utm_source=OG-1793213525303-7wgpwtbjkl5a8&sck=OG-1793213525303-7wgpwtbjkl5a8";
+        "/backredirect";
 
       function hasReachedCheckout() {
         try {
